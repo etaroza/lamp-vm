@@ -10,7 +10,7 @@ Dependencies:
 # Setup DEV environment
 
 ## Prepare Vagrant instance
-1. clone git@github.com:101senses/magento-vm.git
+1. clone git@github.com:etaroza/magento-vm.git
 1. cd magento-vm
 1. `put "magento" folder or symlink into magento-vm/magento or symlink there`
 1. vagrant up

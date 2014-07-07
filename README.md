@@ -44,3 +44,8 @@ server {
   }
 }
 ```
+
+So in Vagrantfile there's port mapping defined:
+
+* 10080 => 80 (to access the web server inside Vagrant)
+* 13306 => 3306 (to access MySQL inside Vagrant)

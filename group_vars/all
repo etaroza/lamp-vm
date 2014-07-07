@@ -7,9 +7,6 @@ mage_db_name: magento
 mage_db_user: username
 mage_db_password: password
 
-# You shouldn't need to change this.
-mysql_port: 3306
-
 # PHP
 php_memory_limit: 256M
 php_timeout: 3600

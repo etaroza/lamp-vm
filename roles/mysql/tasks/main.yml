@@ -9,6 +9,10 @@
   copy: src=innodb.cnf dest=/etc/mysql/conf.d/innodb.cnf owner=root group=root mode=644
   notify: restart mysql
 
+- name: innodb config file
+  copy: src=binding.cnf dest=/etc/mysql/conf.d/binding.cnf owner=root group=root mode=644
+  notify: restart mysql
+
 - name: mysql service
   service: name=mysql state=started enabled=yes
 

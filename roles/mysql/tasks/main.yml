@@ -1,0 +1,21 @@
+---
+- name: install packages
+  apt: name={{ item }} state=present
+  with_items:
+    - mysql-server
+    - python-mysqldb
+
+- name: innodb config file
+  copy: src=innodb.cnf dest=/etc/mysql/conf.d/innodb.cnf owner=root group=root mode=644
+  notify: restart mysql
+
+- name: mysql service
+  service: name=mysql state=started enabled=yes
+
+- name: create magento database
+  mysql_db: name={{ mage_db_name }} state=present collation=utf8_general_ci encoding=utf8
+
+- name: mysql permissions (local)
+  mysql_user: name={{ mage_db_user }} host=localhost password={{ mage_db_password }} priv={{ mage_db_name }}.*:ALL state=present
+- name: mysql permissions (remote)
+  mysql_user: name={{ mage_db_user }} host='%' password={{ mage_db_password }} priv={{ mage_db_name }}.*:ALL state=present

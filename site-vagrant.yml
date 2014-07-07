@@ -1,0 +1,12 @@
+---
+- name: Install Magento, MySQL, Nginx, and PHP-FPM
+  hosts: default
+  roles:
+    - common
+    - mysql
+    - nginx
+    - php-fpm
+    #- magento
+  tasks:
+    - name: Set shell for vagrant user
+      user: name=vagrant shell=/bin/bash

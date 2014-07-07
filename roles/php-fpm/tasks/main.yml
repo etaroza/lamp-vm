@@ -1,0 +1,23 @@
+---
+- name: Install php-fpm and deps
+  apt: name={{ item }} state=latest
+  with_items:
+    - php5-fpm
+    - php5-cli
+    - php5-curl
+    - php5-gd
+    - php5-mcrypt
+    - php5-mysql
+  notify:
+    - restart php
+
+- name: Cleanup old php configuration
+  file: path=/etc/php5/conf.d/sendmail.ini state=absent
+  notify: restart php
+
+- name: Copy php-fpm configuration
+  template: src=magento.conf dest=/etc/php5/fpm/pool.d/www.conf owner=root group=root mode=644 backup=yes
+  notify: restart php
+
+- name: enable (and run) php5-fpm service
+  service: name=php5-fpm enabled=yes state=running

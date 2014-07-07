@@ -1,0 +1,8 @@
+# DO NOT EDIT - MAINTAINED BY ANSIBLE
+
+[mysqld]
+
+# see http://stackoverflow.com/questions/3456159/how-to-shrink-purge-ibdata1-file-in-mysql
+# see http://magento.stackexchange.com/questions/11278/innodb-file-per-table-setting-on-or-off
+# see http://dev.mysql.com/doc/refman/5.0/en/innodb-multiple-tablespaces.html
+innodb_file_per_table

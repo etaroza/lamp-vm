@@ -3,6 +3,10 @@
 
 Vagrant.require_version ">= 1.6.3"
 
+unless Vagrant.has_plugin?("vagrant-hostsupdater")
+	raise 'vagrant-hostsupdater is not installed, you must run "vagrant plugin install vagrant-hostsupdater"'
+end
+
 Vagrant.configure("2") do |config|
 
 	# Every Vagrant virtual environment requires a box to build off of.

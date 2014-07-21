@@ -13,6 +13,10 @@
   copy: src=binding.cnf dest=/etc/mysql/conf.d/binding.cnf owner=root group=root mode=644
   notify: restart mysql
 
+- name: infile config file
+  copy: src=infile.cnf dest=/etc/mysql/conf.d/infile.cnf owner=root group=root mode=644
+  notify: restart mysql
+
 - name: mysql service
   service: name=mysql state=started enabled=yes
 

@@ -35,6 +35,8 @@ Vagrant.configure("2") do |config|
 	config.vm.provider "vmware_fusion" do |v|
 		v.vmx["memsize"] = "3072"
 		v.vmx["numvcpus"] = "2"
+		v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+		v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
 	end
 
 	# PROVISIONING

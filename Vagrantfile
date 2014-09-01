@@ -20,8 +20,10 @@ Vagrant.configure("2") do |config|
 	config.vm.network :private_network, ip: "10.20.30.40", netmask: "255.255.255.0"
 	config.vm.hostname = "magento.dev"
 
-	config.vm.network :forwarded_port, guest:   80, host: 10080 # nginx
-	config.vm.network :forwarded_port, guest: 3306, host: 13306 # mysql
+	config.vm.network :forwarded_port, guest:    80, host: 20080 # nginx
+    config.vm.network :forwarded_port, guest:  3306, host: 23306 # mysql
+    config.vm.network :forwarded_port, guest: 1080, host: 21080 # mailcatcher
+
 
 	config.vm.synced_folder "magento", "/magento", type: "nfs"
 

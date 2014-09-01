@@ -1,12 +1,12 @@
 ---
-- name: Install Magento, MySQL, Nginx, and PHP-FPM
+- name: Install MySQL, Nginx, PHP-FPM, Mailcatcher
   hosts: default
   roles:
     - common
     - mysql
     - nginx
     - php-fpm
-    #- magento
+    - mailcatcher
   tasks:
     - name: Set shell for vagrant user
       user: name=vagrant shell=/bin/bash

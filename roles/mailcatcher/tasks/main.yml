@@ -20,10 +20,11 @@
 - name: MailCatcher | Install MailCatcher
   action: command gem install mailcatcher creates=/usr/bin/mailcatcher
 
-# name: MailCatcher | Configure PHP Email
-# command: sed -ir "s/;\?php_admin_value[sendmail_path] =.*/sendmail_path = \/usr\/bin\/env \/usr\/bin\/catchmail/" /etc/php5/fpm/pool.d/www.conf
-# command: sed -ir "s/;\?sendmail_path =.*/sendmail_path = \/usr\/bin\/env \/usr\/bin\/catchmail/" /etc/php5/cli/php.ini
-# ADDED catchmail directly to the www.conf inside php-fpm task
+- name: MailCatcher | Configure PHP cli mmailcatcher
+  command: sed -ir "s/;\?sendmail_path =.*/sendmail_path = \/usr\/bin\/env \/usr\/local\/bin\/catchmail/" /etc/php5/cli/php.ini
+
+- name: MailCatcher | Configure PHP scripts mailcatcher
+  command: sed -ir "s/;\?sendmail_path =.*/sendmail_path = \/usr\/bin\/env \/usr\/local\/bin\/catchmail/" /etc/php5/fpm/php.ini
 
 - name: MailCatcher | Kill MailCatcher
   command: pkill mailcatcher

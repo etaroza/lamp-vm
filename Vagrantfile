@@ -17,12 +17,19 @@ Vagrant.configure("2") do |config|
 
 	# NETWORK
 
-	config.vm.network :private_network, ip: "10.20.30.40", netmask: "255.255.255.0"
-	config.vm.hostname = "magento.dev"
+	hostPortPrefixParam = (ENV['vagrant_host_port_prefix'] || 1).to_i
+	hostnameParam =  ENV['vagrant_hostname'] || "magento.dev"
 
-	config.vm.network :forwarded_port, guest:    80, host: 20080 # nginx
-    config.vm.network :forwarded_port, guest:  3306, host: 23306 # mysql
-    config.vm.network :forwarded_port, guest: 1080, host: 21080 # mailcatcher
+	config.vm.network :private_network, ip: "10.20.30.4"+(hostPortPrefixParam).to_s, netmask: "255.255.255.0"
+	config.vm.hostname = hostnameParam
+
+	nginxPort = hostPortPrefixParam * 10000 + 80
+	mysqlPort = hostPortPrefixParam * 10000 + 3306
+	mailcatcherPort = hostPortPrefixParam * 10000 + 1080
+
+	config.vm.network :forwarded_port, guest:   80, host: nginxPort
+  config.vm.network :forwarded_port, guest: 3306, host: mysqlPort
+  config.vm.network :forwarded_port, guest: 1080, host: mailcatcherPort
 
 
 	config.vm.synced_folder "magento", "/magento", type: "nfs"

@@ -7,7 +7,7 @@ Dependencies:
 * Vagrant
 * Ansible
 
-# Setup DEV environment
+# Setup DEV environment (Mac)
 
 ## Prepare Vagrant instance
 1. clone git@github.com:etaroza/magento-vm.git

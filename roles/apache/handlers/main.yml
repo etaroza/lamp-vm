@@ -1,0 +1,8 @@
+---
+- name: restart apache2
+  service: name=apache2 state=restarted
+  when: webserver == "apache2" or webserver == "apache"
+
+- name: stop apache2
+  service: name=apache2 state=stopped
+  when: webserver != "apache2" and webserver != "apache"

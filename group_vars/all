@@ -8,9 +8,12 @@ mage_db_user: username
 mage_db_password: password
 
 # PHP
-php_memory_limit: 256M
+php_memory_limit: 512M
 php_timeout: 3600
 
 # This is used for the nginx server configuration, but # access to the
 # Magento site is not restricted by a # named host.
 server_hostname: magento.dev
+
+# Webserver choice: apache2 or nginx
+webserver: apache2

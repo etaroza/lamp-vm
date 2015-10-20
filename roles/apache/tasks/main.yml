@@ -1,0 +1,40 @@
+---
+- name: Install apache2
+  apt: name=apache2 update_cache=yes state=latest
+
+- name: Install libapache2-mod-php5 module
+  apt: name=libapache2-mod-php5 update_cache=yes state=latest
+
+- name: Stop apache2 by default
+  service: name=apache2 state=stopped
+  notify: stop nginx
+
+- name: Enabled mod_rewrite for apache2
+  apache2_module: name=rewrite state=present
+  notify: restart apache2
+
+- name: Enabled mod_php5 for apache2
+  apache2_module: name=php5 state=present
+  notify: restart apache2
+
+- name: Enabled mod_proxy_fcgi for apache2
+  apache2_module: name=fastcgi state=present
+  notify: restart apache2
+
+#- name: Apache2 listen on port {{apache_port}}
+#  lineinfile: dest=/etc/apache2/ports.conf regexp="(Listen 80|Listen {{apache_port}})" line="Listen {{apache_port}}" state=present
+#  notify:
+#    - restart apache2
+
+#- name: Apache2 virtual hosts listen on port {{apache_port}}
+#  lineinfile: dest=/etc/apache2/ports.conf regexp="(NameVirtualHost \*:80|NameVirtualHost \*:{{apache_port}})" line="NameVirtualHost *:{{apache_port}}" state=present
+#  notify:
+#    - restart apache2
+
+- name: Copy apache2 configuration
+  template: src=default.conf dest=/etc/apache2/sites-available/default
+  notify: restart apache2
+
+- name: Check if apache2 is started
+  service: name=apache2 state=started
+  when: webserver == "apache2" or webserver == "apache"

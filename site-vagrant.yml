@@ -1,11 +1,12 @@
 ---
-- name: Install MySQL, Nginx, PHP-FPM, Mailcatcher
+- name: Install MySQL, Nginx, PHP-FPM, Apache2, Mailcatcher
   hosts: default
   roles:
     - common
     - mysql
     - nginx
     - php-fpm
+    - apache
     - mailcatcher
   tasks:
     - name: Set shell for vagrant user

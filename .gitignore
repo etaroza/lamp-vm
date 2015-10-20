@@ -1,5 +1,5 @@
-magento-dev-ansible.sublime-project
-magento-dev-ansible.sublime-workspace
+*.sublime-project
+*.sublime-workspace
 .vagrant
 magento
 .idea

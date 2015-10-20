@@ -2,6 +2,15 @@
 - name: Install nginx
   apt: name=nginx state=installed
 
+- name: Stop nginx by default
+  service: name=nginx state=stopped
+  notify: stop apache2
+
 - name: Copy nginx configuration for magento
   template: src=default.conf dest=/etc/nginx/conf.d/default.conf
   notify: restart nginx
+
+
+- name: Check if Nginx is started
+  service: name=nginx state=started
+  when: webserver == "nginx"

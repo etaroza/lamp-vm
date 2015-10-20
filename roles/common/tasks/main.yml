@@ -1,3 +1,16 @@
 ---
-- name: update apt package list
+- name: Add apt repo for ruby
+  apt_repository: repo='ppa:brightbox/ruby-ng'
+
+- name: Update apt package list
   apt: update_cache=yes
+
+- name: Ruby 2.0
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - ruby2.0
+    - ruby2.0-dev
+    - ruby-switch
+
+- name: Switch ruby version
+  command: ruby-switch --set ruby2.0

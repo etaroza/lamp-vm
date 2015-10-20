@@ -43,7 +43,7 @@ server {
 Here's my .env:
 
 ```
-vagrant_host_port_prefix=1
+vagrant_host_port_prefix=2
 vagrant_hostname=multishop.dev,myshop1.dev,myshop2.dev
 ```
 
@@ -52,6 +52,11 @@ So in Vagrantfile there's port mapping defined:
 * 20080 => 80 (to access the web server inside Vagrant)
 * 23306 => 3306 (to access MySQL inside Vagrant)
 * 21080 => 1080 (to access Mailcatcher inside Vagrant)
+
+## Swapping between nginx and apache2 webservers inside the box
+
+* Change "webserver" variable in group_vars/all
+* run ./provision.sh
 
 ## Troubleshooting
 * Make sure you cleanup /etc/hosts so that it doesn't have stale Vagrant host mappings.

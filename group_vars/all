@@ -1,19 +1,19 @@
 ---
-# Magento folder in the box
-magento_root: /magento
+# Webapp folder in the box
+webapp_root: /webapp
 
 # Mysql
-mage_db_name: magento
-mage_db_user: username
-mage_db_password: password
+mysql_db_name: magento
+mysql_db_user: username
+mysql_db_password: password
 
 # PHP
 php_memory_limit: 512M
 php_timeout: 3600
 
 # This is used for the nginx server configuration,
-# but access to the Magento site is not restricted by a named host.
-server_hostname: magento.dev
+# but access to the site is not restricted by a named host there.
+server_hostname: webapp.dev
 
 # Webserver choice between apache2 and nginx
 webserver: apache2

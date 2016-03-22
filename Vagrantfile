@@ -22,8 +22,8 @@ Vagrant.configure("2") do |config|
 
     # NETWORK
 
-    hostPortPrefixParam = (ENV['vagrant_host_port_prefix'] || 1).to_i
-    hostnameParam =  ENV['vagrant_hostname'] || "magento.dev"
+    hostPortPrefixParam = (ENV['vagrant_host_port_adjust'] || 1).to_i
+    hostnameParam =  ENV['vagrant_hostname'] || "webapp.dev"
     webserver = ENV['webserver'] || "nginx"
     hostnames = hostnameParam.split(',')
 
@@ -33,7 +33,7 @@ Vagrant.configure("2") do |config|
     config.hostsupdater.aliases = hostnames
 
     webserverPort = hostPortPrefixParam * 10000 + 80
-    mysqlPort = hostPortPrefixParam * 10000 + 3306
+    mysqlPort = 3306 + hostPortPrefixParam
     mailcatcherPort = hostPortPrefixParam * 10000 + 1080
 
     config.vm.network :forwarded_port, guest:   80, host: webserverPort
@@ -41,7 +41,7 @@ Vagrant.configure("2") do |config|
     config.vm.network :forwarded_port, guest: 1080, host: mailcatcherPort
 
 
-    config.vm.synced_folder "magento", "/magento", type: "nfs"
+    config.vm.synced_folder "webapp", "/webapp", type: "nfs"
 
     # PROVIDERS
 

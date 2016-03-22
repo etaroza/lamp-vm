@@ -1,6 +1,6 @@
 *.sublime-project
 *.sublime-workspace
 .vagrant
-magento
+webapp
 .idea
 .env

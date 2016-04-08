@@ -3,7 +3,7 @@
 webapp_root: /webapp
 
 # Mysql
-mysql_db_name: magento
+mysql_db_name: webappdb
 mysql_db_user: username
 mysql_db_password: password
 

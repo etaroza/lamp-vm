@@ -1,5 +1,6 @@
 *.sublime-project
 *.sublime-workspace
+site-vagrant.retry
 .vagrant
 webapp*
 .idea

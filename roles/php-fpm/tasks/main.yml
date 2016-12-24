@@ -17,6 +17,8 @@
     - php{{php_version}}-mcrypt
     - php{{php_version}}-mysql
     - php{{php_version}}-soap
+    - php{{php_version}}-zip
+    - php{{php_version}}-bz2
   notify:
     - restart php
 

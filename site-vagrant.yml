@@ -8,6 +8,7 @@
     - php-fpm
     - apache
     - mailcatcher
+    - composer
   tasks:
     - name: Set shell for vagrant user
       user: name=vagrant shell=/bin/bash

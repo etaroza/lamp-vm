@@ -14,15 +14,6 @@
   service: name=apache2 state=stopped
   notify: stop nginx
 
-- name: PHP | Apache php.ini
-  template:
-    src=php.ini
-    dest=/etc/php/{{php_version}}/apache2/php.ini
-    backup=no
-    owner=root
-    group=root
-    mode=0644
-
 - name: Disable PHP
   file: path={{ item }} state=absent
   with_items:

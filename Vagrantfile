@@ -41,7 +41,7 @@ Vagrant.configure("2") do |config|
     config.vm.network :forwarded_port, guest: 1080, host: mailcatcherPort
 
 
-    config.vm.synced_folder "webapp", "/webapp", type: "nfs"
+    config.vm.synced_folder "webapp", "/var/www/webapp", type: "nfs"
 
     # PROVIDERS
 

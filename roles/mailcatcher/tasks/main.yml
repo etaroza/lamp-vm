@@ -1,18 +1,21 @@
 ---
-- name: Commmon | MailUtils
-  apt: pkg=mailutils state=latest
+- name: Commmon | MailUtils and deps
+  apt: name={{ item }} state=latest
+  with_items:
+    - mailutils
+    - libsqlite3-dev
 
 - name: MailCatcher | Install MailCatcher
   action: command gem install mailcatcher creates=/usr/bin/mailcatcher
 
 - name: MailCatcher | Configure PHP cli mmailcatcher
-  command: sed -ir "s/;\?sendmail_path =.*/sendmail_path = \/usr\/bin\/env \/usr\/local\/bin\/catchmail/" /etc/php5/cli/php.ini
+  command: sed -ir "s/;\?sendmail_path =.*/sendmail_path = \/usr\/bin\/env \/usr\/local\/bin\/catchmail/" /etc/php/{{php_version}}/cli/php.ini
 
 - name: MailCatcher | Configure PHP scripts mailcatcher
-  command: sed -ir "s/;\?sendmail_path =.*/sendmail_path = \/usr\/bin\/env \/usr\/local\/bin\/catchmail/" /etc/php5/fpm/php.ini
+  command: sed -ir "s/;\?sendmail_path =.*/sendmail_path = \/usr\/bin\/env \/usr\/local\/bin\/catchmail/" /etc/php/{{php_version}}/fpm/php.ini
 
 - name: MailCatcher | Configure Apache2 PHP mailcatcher
-  command: sed -ir "s/;\?sendmail_path =.*/sendmail_path = \/usr\/bin\/env \/usr\/local\/bin\/catchmail/" /etc/php5/apache2/php.ini
+  command: sed -ir "s/;\?sendmail_path =.*/sendmail_path = \/usr\/bin\/env \/usr\/local\/bin\/catchmail/" /etc/php/{{php_version}}/apache2/php.ini
 
 - name: MailCatcher | Kill MailCatcher
   command: pkill mailcatcher

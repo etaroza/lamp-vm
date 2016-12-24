@@ -1,15 +1,24 @@
 ---
 # Webapp folder in the box
-webapp_root: /webapp
+webapp_root: /var/www/webapp
 
 # Mysql
 mysql_db_name: webappdb
 mysql_db_user: username
 mysql_db_password: password
 
-# PHP
+# PHP. When reprovisioning from PHP < 5.6 then run apt-get purge 'apache2*' inside the box
+php_max_execution_time: 3600
 php_memory_limit: 512M
-php_timeout: 3600
+php_display_errors: On
+php_display_startup_errors: On
+php_html_errors: On
+php_post_max_size: 0
+php_upload_max_filesize: 0
+php_date_timezone: Europe/Zurich
+# possible values 5.6 and 7.0
+php_version: 5.6
+
 
 # This is used for the nginx server configuration,
 # but access to the site is not restricted by a named host there.

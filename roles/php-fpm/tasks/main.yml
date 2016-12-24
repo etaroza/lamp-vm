@@ -1,23 +1,42 @@
 ---
+- name: PHP | Add PPA ready for latest PHP
+  apt_repository: repo='ppa:ondrej/php'
+                  state=present
+                  update_cache=yes
+
 - name: Install php-fpm and deps
   apt: name={{ item }} state=latest
   with_items:
-    - php5-fpm
-    - php5-cli
-    - php5-curl
-    - php5-gd
-    - php5-mcrypt
-    - php5-mysql
+    - php{{php_version}}-common
+    - php{{php_version}}-mbstring
+    - php{{php_version}}-fpm
+    - php{{php_version}}-xml
+    - php{{php_version}}-cli
+    - php{{php_version}}-curl
+    - php{{php_version}}-gd
+    - php{{php_version}}-mcrypt
+    - php{{php_version}}-mysql
+    - php{{php_version}}-soap
   notify:
     - restart php
 
-- name: Cleanup old php configuration
-  file: path=/etc/php5/conf.d/sendmail.ini state=absent
-  notify: restart php
+- name: PHP | FPM php.ini
+  template:
+    src=php.ini
+    dest=/etc/php/{{php_version}}/fpm/php.ini
+    backup=no
+    owner=root
+    group=root
+    mode=0644
 
-- name: Copy php-fpm configuration
-  template: src=webapp.conf dest=/etc/php5/fpm/pool.d/www.conf owner=root group=root mode=644 backup=yes
-  notify: restart php
+- name: PHP | CLI php.ini
+  template:
+    src=php.ini
+    dest=/etc/php/{{php_version}}/cli/php.ini
+    backup=no
+    owner=root
+    group=root
+    mode=0644
 
-- name: enable (and run) php5-fpm service
-  service: name=php5-fpm enabled=yes state=running
+- name: enable (and run) php-fpm service
+  service: name=php{{php_version}}-fpm enabled=yes state=running

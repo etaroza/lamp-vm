@@ -1,24 +1,52 @@
 ---
+- name: Apache2 | Add Apache2 PPA ready for latest PHP
+  apt_repository: repo='ppa:ondrej/apache2'
+                  state=present
+                  update_cache=yes
+
 - name: Install apache2
   apt: name=apache2 update_cache=yes state=latest
 
-- name: Install libapache2-mod-php5 module
-  apt: name=libapache2-mod-php5 update_cache=yes state=latest
+- name: Install libapache2-mod-php module
+  apt: name=libapache2-mod-php{{php_version}} update_cache=yes state=latest
 
 - name: Stop apache2 by default
   service: name=apache2 state=stopped
   notify: stop nginx
 
-- name: Enabled mod_rewrite for apache2
-  apache2_module: name=rewrite state=present
+- name: PHP | Apache php.ini
+  template:
+    src=php.ini
+    dest=/etc/php/{{php_version}}/apache2/php.ini
+    backup=no
+    owner=root
+    group=root
+    mode=0644
+
+- name: Disable PHP
+  file: path={{ item }} state=absent
+  with_items:
+    - /etc/apache2/mods-enabled/php5.6.conf
+    - /etc/apache2/mods-enabled/php5.6.load
+    - /etc/apache2/mods-enabled/php7.0.conf
+    - /etc/apache2/mods-enabled/php7.0.load
   notify: restart apache2
 
-- name: Enabled mod_php5 for apache2
-  apache2_module: name=php5 state=present
+- name: Enable PHP
+  file:
+    src: '{{ item.src }}'
+    dest: '{{ item.dest }}'
+    state: link
+  with_items:
+    - {src: '/etc/apache2/mods-available/php{{php_version}}.conf', dest: '/etc/apache2/mods-enabled/php{{php_version}}.conf'}
+    - {src: '/etc/apache2/mods-available/php{{php_version}}.load', dest: '/etc/apache2/mods-enabled/php{{php_version}}.load'}
   notify: restart apache2
 
-- name: Enabled mod_proxy_fcgi for apache2
-  apache2_module: name=fastcgi state=present
+- name: Enable apache2 modules
+  apache2_module: name={{ item }} state=present
+  with_items:
+    - rewrite
+    - proxy_fcgi
   notify: restart apache2
 
 #- name: Apache2 listen on port {{apache_port}}
@@ -32,7 +60,7 @@
 #    - restart apache2
 
 - name: Copy apache2 configuration
-  template: src=default.conf dest=/etc/apache2/sites-available/default
+  template: src=default.conf dest=/etc/apache2/sites-available/000-default.conf
   notify: restart apache2
 
 - name: Check if apache2 is started
